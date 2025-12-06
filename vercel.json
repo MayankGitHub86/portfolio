@@ -1,7 +1,5 @@
 {
-  "installCommand": "npm install",
-  "buildCommand": "npm run build",
+  "buildCommand": "vite build",
   "outputDirectory": "dist",
-  "cleanUrls": true,
-  "trailingSlash": false
+  "installCommand": "npm install"
 }
