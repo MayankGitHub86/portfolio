@@ -13,6 +13,19 @@ const projects = [
     status: "Active",
     date: "Since Sep 2025",
     gradient: "from-primary/20 to-blue-500/20",
+    githubUrl: "https://github.com/MayankGitHub86/Intelliclaim",
+    liveUrl: "https://intelliclaim.vercel.app",
+  },
+  {
+    title: "SolveHub",
+    description: "Comprehensive problem-solving platform featuring DSA implementations, algorithms, and coding challenges. Built to help developers practice and master data structures and algorithms.",
+    techStack: ["React", "TypeScript", "Tailwind CSS", "Vite"],
+    color: "from-emerald-400 to-cyan-400",
+    status: "Active",
+    date: "Since Dec 2024",
+    gradient: "from-emerald-400/20 to-cyan-500/20",
+    githubUrl: "https://github.com/MayankGitHub86/SolveHub",
+    liveUrl: "https://solvehub.vercel.app",
   },
   {
     title: "Venue Finder Chatbot",
@@ -22,6 +35,8 @@ const projects = [
     status: "Completed",
     date: "Aug 2025",
     gradient: "from-secondary/20 to-purple-500/20",
+    githubUrl: "https://github.com/MayankGitHub86/Venue-Finder-Chatbot",
+    liveUrl: null,
   },
   {
     title: "Online Test Planner",
@@ -31,6 +46,8 @@ const projects = [
     status: "Completed",
     date: "Jul 2025",
     gradient: "from-cyan-400/20 to-primary/20",
+    githubUrl: "https://github.com/MayankGitHub86/Online-Test-Planner",
+    liveUrl: null,
   },
   {
     title: "Vartalaap.AI",
@@ -40,6 +57,8 @@ const projects = [
     status: "Completed",
     date: "Jul 2025",
     gradient: "from-pink-400/20 to-secondary/20",
+    githubUrl: "https://github.com/MayankGitHub86/Vartalaap.AI",
+    liveUrl: null,
   },
   {
     title: "Campus Gateway",
@@ -49,6 +68,8 @@ const projects = [
     status: "Completed",
     date: "Jun - Jul 2025",
     gradient: "from-green-400/20 to-primary/20",
+    githubUrl: "https://github.com/MayankGitHub86/Campus-Gateway",
+    liveUrl: null,
   },
 ];
 
@@ -158,24 +179,35 @@ function ProjectCard({ project, index }: { project: typeof projects[0]; index: n
 
           {/* Actions */}
           <div className="flex gap-3">
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className={`flex-1 px-4 py-2.5 rounded-lg bg-gradient-to-r ${project.color} text-white font-medium flex items-center justify-center gap-2 hover:shadow-lg transition-all duration-300`}
-              style={{
-                boxShadow: isHovered ? "0 0 20px rgba(0, 163, 255, 0.4)" : "none",
-              }}
-            >
-              <ExternalLink className="w-4 h-4" />
-              View Project
-            </motion.button>
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="px-4 py-2.5 rounded-lg glass-card border border-primary/30 hover:border-primary/60 hover:bg-primary/10 transition-all duration-300"
-            >
-              <Github className="w-5 h-5 text-primary" />
-            </motion.button>
+            {project.liveUrl && (
+              <motion.a
+                href={project.liveUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className={`flex-1 px-4 py-2.5 rounded-lg bg-gradient-to-r ${project.color} text-white font-medium flex items-center justify-center gap-2 hover:shadow-lg transition-all duration-300`}
+                style={{
+                  boxShadow: isHovered ? "0 0 20px rgba(0, 163, 255, 0.4)" : "none",
+                }}
+              >
+                <ExternalLink className="w-4 h-4" />
+                View Live
+              </motion.a>
+            )}
+            {project.githubUrl && (
+              <motion.a
+                href={project.githubUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className={`${project.liveUrl ? '' : 'flex-1'} px-4 py-2.5 rounded-lg glass-card border border-primary/30 hover:border-primary/60 hover:bg-primary/10 transition-all duration-300 flex items-center justify-center gap-2`}
+              >
+                <Github className="w-5 h-5 text-primary" />
+                {!project.liveUrl && <span>View Code</span>}
+              </motion.a>
+            )}
           </div>
         </div>
 

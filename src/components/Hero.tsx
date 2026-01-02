@@ -15,8 +15,13 @@ export function Hero() {
   }, []);
 
   const handleDownloadCV = () => {
-    // Mock CV download
-    alert("CV download would start here. Add your CV link!");
+    // Download CV from public folder
+    const link = document.createElement('a');
+    link.href = '/Mayank_Pandey_CV.pdf';
+    link.download = 'Mayank_Pandey_CV.pdf';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   const scrollToContact = () => {
