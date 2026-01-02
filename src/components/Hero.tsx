@@ -93,7 +93,7 @@ export function Hero() {
               className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-4"
             >
               <span className="block mb-2">Hi, I&apos;m</span>
-              <span className="block bg-gradient-to-r from-primary via-secondary to-primary bg-clip-text text-transparent animate-gradient bg-[length:200%_auto]">
+              <span className="block text-primary">
                 Mayank Pandey
               </span>
             </motion.h1>
