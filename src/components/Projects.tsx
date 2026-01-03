@@ -248,6 +248,24 @@ function ProjectCard({ project, index }: { project: typeof projects[0]; index: n
 export function Projects() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.1 });
+  const [filter, setFilter] = useState<string>("All");
+
+  const categories = ["All", "Active", "AI/ML", "Web Dev", "Full-Stack"];
+
+  const filteredProjects = projects.filter((project) => {
+    if (filter === "All") return true;
+    if (filter === "Active") return project.status === "Active";
+    if (filter === "AI/ML") return project.techStack.some(tech => 
+      tech.includes("AI") || tech.includes("Gemini")
+    );
+    if (filter === "Web Dev") return project.techStack.some(tech => 
+      ["HTML", "CSS", "JavaScript"].includes(tech)
+    );
+    if (filter === "Full-Stack") return project.techStack.some(tech => 
+      ["React", "Node.js", "PHP", "MySQL"].includes(tech)
+    );
+    return true;
+  });
 
   return (
     <section id="projects" ref={ref} className="relative py-20 sm:py-32 overflow-hidden">
@@ -281,9 +299,33 @@ export function Projects() {
           </motion.p>
         </motion.div>
 
+        {/* Filter Buttons */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6, delay: 0.3 }}
+          className="flex flex-wrap items-center justify-center gap-3 mb-12"
+        >
+          {categories.map((category) => (
+            <motion.button
+              key={category}
+              onClick={() => setFilter(category)}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className={`px-6 py-2.5 rounded-lg font-medium transition-all duration-300 ${
+                filter === category
+                  ? "bg-gradient-to-r from-primary to-secondary text-white shadow-lg shadow-primary/30"
+                  : "glass-card border border-primary/20 hover:border-primary/40 hover:bg-primary/10"
+              }`}
+            >
+              {category}
+            </motion.button>
+          ))}
+        </motion.div>
+
         {/* Projects Grid */}
         <div className="grid md:grid-cols-2 gap-8">
-          {projects.map((project, index) => (
+          {filteredProjects.map((project, index) => (
             <ProjectCard key={project.title} project={project} index={index} />
           ))}
         </div>

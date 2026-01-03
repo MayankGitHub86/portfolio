@@ -9,6 +9,8 @@ import { Experience } from "./components/Experience";
 import { Contact } from "./components/Contact";
 import { Footer } from "./components/Footer";
 import { ThemeToggle } from "./components/ThemeToggle";
+import { LoadingScreen } from "./components/LoadingScreen";
+import { ScrollToTop } from "./components/ScrollToTop";
 import { Toaster } from "./components/ui/sonner";
 import { motion } from "motion/react";
 import { useEffect, useState } from "react";
@@ -26,6 +28,9 @@ export default function App() {
 
   return (
     <div className="relative min-h-screen bg-background text-foreground overflow-x-hidden">
+      {/* Loading Screen */}
+      <LoadingScreen />
+
       {/* Animated Background - Full Website */}
       <div className="fixed inset-0 z-0">
         {/* Base Gradient */}
@@ -128,6 +133,9 @@ export default function App() {
 
       {/* Theme Toggle */}
       <ThemeToggle />
+
+      {/* Scroll to Top */}
+      <ScrollToTop />
     </div>
   );
 }

@@ -2,6 +2,7 @@ import { Mail, Download, Github, Linkedin } from "lucide-react";
 import { motion } from "motion/react";
 import { useEffect, useState } from "react";
 import heroImage from "figma:asset/1df0aa5645ac6689ada2f014da20f342dac10e67.png";
+import { trackCVDownload } from "../utils/analytics";
 
 export function Hero() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
@@ -15,6 +16,9 @@ export function Hero() {
   }, []);
 
   const handleDownloadCV = () => {
+    // Track analytics
+    trackCVDownload();
+    
     // Download CV from public folder
     const link = document.createElement('a');
     link.href = '/Mayank_Pandey_CV.pdf';
