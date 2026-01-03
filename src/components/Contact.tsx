@@ -3,6 +3,7 @@
 import { motion, useInView } from "motion/react";
 import { useRef, useState } from "react";
 import { Mail, Phone, MapPin, Send, Linkedin, Github, CheckCircle2 } from "lucide-react";
+import emailjs from '@emailjs/browser';
 
 const contactInfo = [
   {
@@ -53,15 +54,43 @@ export function Contact() {
     message: "",
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Mock form submission
-    setIsSubmitted(true);
-    setTimeout(() => {
-      setIsSubmitted(false);
-      setFormData({ name: "", email: "", subject: "", message: "" });
-    }, 3000);
+    setIsSubmitting(true);
+    setError("");
+
+    try {
+      // EmailJS configuration - Replace with your actual IDs
+      // Get these from https://www.emailjs.com/
+      const result = await emailjs.send(
+        'YOUR_SERVICE_ID', // Replace with your EmailJS service ID
+        'YOUR_TEMPLATE_ID', // Replace with your EmailJS template ID
+        {
+          from_name: formData.name,
+          from_email: formData.email,
+          subject: formData.subject,
+          message: formData.message,
+          to_name: 'Mayank Pandey',
+        },
+        'YOUR_PUBLIC_KEY' // Replace with your EmailJS public key
+      );
+
+      if (result.text === 'OK') {
+        setIsSubmitted(true);
+        setTimeout(() => {
+          setIsSubmitted(false);
+          setFormData({ name: "", email: "", subject: "", message: "" });
+        }, 3000);
+      }
+    } catch (err) {
+      console.error('Email send failed:', err);
+      setError("Failed to send message. Please try again or email directly.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -260,10 +289,15 @@ export function Contact() {
                 type="submit"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                disabled={isSubmitted}
+                disabled={isSubmitted || isSubmitting}
                 className="w-full px-8 py-4 rounded-lg bg-gradient-to-r from-primary to-secondary text-background font-medium flex items-center justify-center gap-2 hover:shadow-lg hover:shadow-primary/50 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                {isSubmitted ? (
+                {isSubmitting ? (
+                  <>
+                    <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                    Sending...
+                  </>
+                ) : isSubmitted ? (
                   <>
                     <CheckCircle2 className="w-5 h-5" />
                     Message Sent!
@@ -276,7 +310,17 @@ export function Contact() {
                 )}
               </motion.button>
 
-              {isSubmitted && (
+              {error && (
+                <motion.p
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="text-center text-sm text-red-400"
+                >
+                  {error}
+                </motion.p>
+              )}
+
+              {isSubmitted && !error && (
                 <motion.p
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
