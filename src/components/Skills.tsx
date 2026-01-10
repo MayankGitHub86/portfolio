@@ -191,18 +191,23 @@ export function Skills() {
             <h3 className="text-2xl font-bold mb-6">Certified & Trained</h3>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               {[
-                { name: "Google - Networking", provider: "Google" },
-                { name: "IBM - Hardware & OS", provider: "IBM" },
-                { name: "Responsive Web Design", provider: "FreeCodeCamp" },
-                { name: "W3Grads FLAMES '25", provider: "W3Grads" },
+                { name: "Google - Networking", provider: "Google", link: "https://coursera.org/share/d99776de4b928c4df6354ab1a88c0c3b" },
+                { name: "IBM - Hardware & OS", provider: "IBM", link: null },
+                { name: "Responsive Web Design", provider: "FreeCodeCamp", link: null },
+                { name: "W3Grads FLAMES '25", provider: "W3Grads", link: null },
               ].map((cert, index) => (
-                <motion.div
+                <motion.a
                   key={cert.name}
+                  href={cert.link || undefined}
+                  target={cert.link ? "_blank" : undefined}
+                  rel={cert.link ? "noopener noreferrer" : undefined}
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={isInView ? { opacity: 1, scale: 1 } : {}}
                   transition={{ duration: 0.4, delay: 0.6 + index * 0.1 }}
                   whileHover={{ scale: 1.05, y: -5 }}
-                  className="p-4 rounded-xl bg-gradient-to-br from-muted/30 to-muted/10 border border-primary/10 hover:border-primary/30 transition-all duration-300"
+                  className={`p-4 rounded-xl bg-gradient-to-br from-muted/30 to-muted/10 border border-primary/10 hover:border-primary/30 transition-all duration-300 ${
+                    cert.link ? 'cursor-pointer' : 'cursor-default'
+                  }`}
                 >
                   <div className="w-10 h-10 mx-auto mb-3 rounded-lg bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center">
                     <motion.div
@@ -214,7 +219,7 @@ export function Skills() {
                   </div>
                   <p className="text-sm font-medium mb-1">{cert.provider}</p>
                   <p className="text-xs text-muted-foreground">{cert.name}</p>
-                </motion.div>
+                </motion.a>
               ))}
             </div>
           </div>

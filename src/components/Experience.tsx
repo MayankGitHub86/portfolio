@@ -47,21 +47,25 @@ const certifications = [
     provider: "Google",
     date: "Sep 2024",
     icon: Award,
+    link: "https://coursera.org/share/d99776de4b928c4df6354ab1a88c0c3b",
   },
   {
     title: "Introduction to Hardware and Operating Systems",
     provider: "IBM",
     date: "Oct 2024",
+    link: null,
   },
   {
     title: "Responsive Web Design",
     provider: "FreeCodeCamp",
     date: "Oct 2024",
+    link: null,
   },
   {
     title: "Social Media Marketing",
     provider: "Coursera",
     date: "Oct 2023",
+    link: null,
   },
 ];
 
@@ -230,13 +234,18 @@ export function Experience() {
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {certifications.map((cert, index) => (
-              <motion.div
+              <motion.a
                 key={cert.title}
+                href={cert.link || undefined}
+                target={cert.link ? "_blank" : undefined}
+                rel={cert.link ? "noopener noreferrer" : undefined}
                 initial={{ opacity: 0, y: 30 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.5, delay: 0.6 + index * 0.1 }}
                 whileHover={{ y: -10, scale: 1.02 }}
-                className="glass-card rounded-xl p-6 border border-primary/20 hover:border-primary/40 transition-all duration-500 text-center"
+                className={`glass-card rounded-xl p-6 border border-primary/20 hover:border-primary/40 transition-all duration-500 text-center ${
+                  cert.link ? 'cursor-pointer' : 'cursor-default'
+                }`}
               >
                 <motion.div
                   whileHover={{ rotate: 360 }}
@@ -248,7 +257,7 @@ export function Experience() {
                 <h4 className="font-semibold mb-2 text-sm">{cert.title}</h4>
                 <p className="text-sm text-primary mb-1">{cert.provider}</p>
                 <p className="text-xs text-muted-foreground">{cert.date}</p>
-              </motion.div>
+              </motion.a>
             ))}
           </div>
         </motion.div>
