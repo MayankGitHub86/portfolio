@@ -2,13 +2,13 @@
 
 import { motion, useInView } from "motion/react";
 import { useRef, useState } from "react";
-import { Code, Server, Palette, Shield } from "lucide-react";
+import { Code, Server, Wrench, Cpu, Award } from "lucide-react";
 
 const skillCategories = [
   {
     name: "Frontend",
     icon: Code,
-    color: "primary",
+    hex: "#00a3ff",
     skills: [
       { name: "HTML & CSS", level: 95, description: "Expert in modern CSS, Flexbox, Grid, animations" },
       { name: "JavaScript", level: 90, description: "ES6+, async programming, DOM manipulation" },
@@ -19,7 +19,7 @@ const skillCategories = [
   {
     name: "Backend",
     icon: Server,
-    color: "secondary",
+    hex: "#a020f0",
     skills: [
       { name: "Node.js", level: 85, description: "Express, REST APIs, middleware" },
       { name: "PHP", level: 80, description: "Server-side scripting, form handling" },
@@ -29,19 +29,19 @@ const skillCategories = [
   },
   {
     name: "Tools & Platforms",
-    icon: Palette,
-    color: "chart-3",
+    icon: Wrench,
+    hex: "#00ffc6",
     skills: [
       { name: "Git & GitHub", level: 90, description: "Version control, collaboration" },
-      { name: "Hyper-V", level: 70, description: "Virtualization, cloud environments" },
+      { name: "Hyper-V", level: 70, description: "Virtualisation, cloud environments" },
       { name: "IIS", level: 65, description: "Web server configuration" },
       { name: "VS Code", level: 95, description: "IDE mastery, extensions, debugging" },
     ],
   },
   {
     name: "AI & Integration",
-    icon: Shield,
-    color: "chart-4",
+    icon: Cpu,
+    hex: "#ff006e",
     skills: [
       { name: "AI APIs", level: 80, description: "OpenAI, Gemini integration" },
       { name: "Framer Motion", level: 85, description: "Advanced animations, transitions" },
@@ -62,22 +62,21 @@ function SkillCard({ category, index }: { category: typeof skillCategories[0]; i
       initial={{ opacity: 0, y: 50 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.6, delay: index * 0.1 }}
-      className="glass-card rounded-2xl p-6 sm:p-8 border border-primary/20 hover:border-primary/40 transition-all duration-500"
+      className="glass-card rounded-2xl p-6 sm:p-8 border border-white/10 hover:border-white/20 transition-all duration-500"
     >
       {/* Category Header */}
-      <div className="flex items-center gap-4 mb-6">
-        <motion.div
-          whileHover={{ rotate: 360, scale: 1.1 }}
-          transition={{ duration: 0.6 }}
-          className={`w-14 h-14 rounded-xl bg-gradient-to-br from-${category.color}/20 to-${category.color}/10 flex items-center justify-center border border-${category.color}/30`}
+      <div className="flex items-center gap-3 mb-6">
+        <div
+          className="w-11 h-11 rounded-xl flex items-center justify-center border border-white/10"
+          style={{ background: `${category.hex}22` }}
         >
-          <category.icon className={`w-7 h-7 text-${category.color}`} />
-        </motion.div>
-        <h3 className="text-2xl font-bold">{category.name}</h3>
+          <category.icon className="w-5 h-5" style={{ color: category.hex }} />
+        </div>
+        <h3 className="text-xl font-bold">{category.name}</h3>
       </div>
 
       {/* Skills List */}
-      <div className="space-y-6">
+      <div className="space-y-5">
         {category.skills.map((skill, skillIndex) => (
           <div
             key={skill.name}
@@ -85,37 +84,33 @@ function SkillCard({ category, index }: { category: typeof skillCategories[0]; i
             onMouseEnter={() => setHoveredSkill(skill.name)}
             onMouseLeave={() => setHoveredSkill(null)}
           >
-            <div className="flex items-center justify-between mb-2">
-              <span className="font-medium">{skill.name}</span>
-              <motion.span
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                className="text-sm text-muted-foreground"
-              >
+            <div className="flex items-center justify-between mb-1.5">
+              <span className="text-sm font-medium">{skill.name}</span>
+              <span className="text-xs font-mono" style={{ color: category.hex }}>
                 {skill.level}%
-              </motion.span>
+              </span>
             </div>
 
-            {/* Progress Bar */}
-            <div className="relative h-2 bg-muted/30 rounded-full overflow-hidden">
+            {/* Animated Progress Bar */}
+            <div className="relative h-1.5 bg-white/5 rounded-full overflow-hidden">
               <motion.div
                 initial={{ width: 0 }}
                 animate={isInView ? { width: `${skill.level}%` } : { width: 0 }}
-                transition={{ duration: 1, delay: 0.2 + skillIndex * 0.1, ease: "easeOut" }}
-                className={`absolute top-0 left-0 h-full bg-gradient-to-r from-${category.color} to-${category.color}/60 rounded-full`}
+                transition={{ duration: 1.1, delay: 0.2 + skillIndex * 0.1, ease: "easeOut" }}
+                className="absolute top-0 left-0 h-full rounded-full"
                 style={{
-                  boxShadow: `0 0 10px var(--color-${category.color})`,
+                  background: `linear-gradient(90deg, ${category.hex}cc, ${category.hex})`,
+                  boxShadow: `0 0 8px ${category.hex}88`,
                 }}
               />
             </div>
 
-            {/* Skill Description Tooltip */}
+            {/* Hover Tooltip */}
             {hoveredSkill === skill.name && (
               <motion.div
-                initial={{ opacity: 0, y: 10 }}
+                initial={{ opacity: 0, y: 6 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 10 }}
-                className="absolute z-10 left-0 right-0 mt-2 p-3 glass-card rounded-lg border border-primary/30 text-sm text-muted-foreground"
+                className="absolute z-20 left-0 right-0 mt-1.5 px-3 py-2 glass-card rounded-lg border border-white/10 text-xs text-muted-foreground"
               >
                 {skill.description}
               </motion.div>
@@ -123,16 +118,6 @@ function SkillCard({ category, index }: { category: typeof skillCategories[0]; i
           </div>
         ))}
       </div>
-
-      {/* Neon Glow Effect on Hover */}
-      <motion.div
-        className="absolute inset-0 rounded-2xl pointer-events-none"
-        initial={{ opacity: 0 }}
-        whileHover={{ opacity: 1 }}
-        style={{
-          background: `radial-gradient(circle at 50% 50%, var(--color-${category.color})/0.1, transparent)`,
-        }}
-      />
     </motion.div>
   );
 }
@@ -174,11 +159,53 @@ export function Skills() {
         </motion.div>
 
         {/* Skills Grid */}
-        <div className="grid md:grid-cols-2 gap-8">
+        <div className="grid md:grid-cols-2 gap-6">
           {skillCategories.map((category, index) => (
             <SkillCard key={category.name} category={category} index={index} />
           ))}
         </div>
+
+        {/* Tech Cloud — fills the page and adds visual richness */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8, delay: 0.5 }}
+          className="mt-10 glass-card rounded-2xl p-6 sm:p-8 border border-white/10"
+        >
+          <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-5 text-center">
+            Full Tech Stack at a Glance
+          </p>
+          <div className="flex flex-wrap gap-2 justify-center">
+            {[
+              { name: "React", color: "#61DAFB" }, { name: "TypeScript", color: "#3178C6" },
+              { name: "Node.js", color: "#68A063" }, { name: "JavaScript", color: "#F7DF1E" },
+              { name: "HTML5", color: "#E34F26" }, { name: "CSS3", color: "#1572B6" },
+              { name: "PHP", color: "#777BB4" }, { name: "MySQL", color: "#4479A1" },
+              { name: "C++", color: "#00599C" }, { name: "Git", color: "#F05032" },
+              { name: "GitHub", color: "#a5a5a5" }, { name: "Vite", color: "#646CFF" },
+              { name: "Framer Motion", color: "#FF0055" }, { name: "Tailwind", color: "#38BDF8" },
+              { name: "OpenAI API", color: "#10A37F" }, { name: "Gemini API", color: "#4285F4" },
+              { name: "IIS", color: "#5591c8" }, { name: "Hyper-V", color: "#0078D4" },
+              { name: "VS Code", color: "#007ACC" }, { name: "Linux", color: "#FCC624" },
+            ].map((tech, i) => (
+              <motion.span
+                key={tech.name}
+                initial={{ opacity: 0, scale: 0.7 }}
+                animate={isInView ? { opacity: 1, scale: 1 } : {}}
+                transition={{ duration: 0.3, delay: 0.6 + i * 0.03 }}
+                whileHover={{ scale: 1.12, y: -3 }}
+                className="px-3 py-1.5 rounded-full text-xs font-mono border transition-all duration-200 cursor-default"
+                style={{
+                  background: `${tech.color}18`,
+                  borderColor: `${tech.color}44`,
+                  color: tech.color,
+                }}
+              >
+                {tech.name}
+              </motion.span>
+            ))}
+          </div>
+        </motion.div>
 
         {/* Certifications Badge */}
         <motion.div
@@ -214,7 +241,7 @@ export function Skills() {
                       animate={{ rotate: [0, 360] }}
                       transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
                     >
-                      <Shield className="w-5 h-5 text-primary" />
+                      <Award className="w-5 h-5 text-primary" />
                     </motion.div>
                   </div>
                   <p className="text-sm font-medium mb-1">{cert.provider}</p>

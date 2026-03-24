@@ -1,25 +1,114 @@
 import { Mail, Download, Github, Linkedin } from "lucide-react";
 import { motion } from "motion/react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import heroImage from "figma:asset/1df0aa5645ac6689ada2f014da20f342dac10e67.png";
 import { trackCVDownload } from "../utils/analytics";
+import { SpotlightGroup } from "./SpotlightButton";
 
-export function Hero() {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+// Typing effect roles
+const roles = [
+  "Full-Stack Developer",
+  "Cloud & DevOps Enthusiast",
+  "AI Integration Specialist",
+  "Open Source Contributor",
+  "Problem Solver",
+];
+
+function useTypingEffect(words: string[], typingSpeed = 80, deletingSpeed = 40, pauseDuration = 2000) {
+  const [displayText, setDisplayText] = useState("");
+  const [wordIndex, setWordIndex] = useState(0);
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  const tick = useCallback(() => {
+    const currentWord = words[wordIndex];
+
+    if (!isDeleting) {
+      setDisplayText(currentWord.substring(0, displayText.length + 1));
+      if (displayText.length === currentWord.length) {
+        setTimeout(() => setIsDeleting(true), pauseDuration);
+        return;
+      }
+    } else {
+      setDisplayText(currentWord.substring(0, displayText.length - 1));
+      if (displayText.length === 0) {
+        setIsDeleting(false);
+        setWordIndex((prev) => (prev + 1) % words.length);
+        return;
+      }
+    }
+  }, [displayText, isDeleting, wordIndex, words, pauseDuration]);
 
   useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
-    };
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, []);
+    const speed = isDeleting ? deletingSpeed : typingSpeed;
+    const timer = setTimeout(tick, speed);
+    return () => clearTimeout(timer);
+  }, [tick, isDeleting, deletingSpeed, typingSpeed]);
+
+  return displayText;
+}
+
+// Character reveal animation variants
+const nameVariants = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.04,
+      delayChildren: 0.3,
+    },
+  },
+};
+
+const charVariants = {
+  hidden: {
+    opacity: 0,
+    y: 50,
+    rotateX: -90,
+    scale: 0.5,
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    rotateX: 0,
+    scale: 1,
+    transition: {
+      type: "spring" as const,
+      stiffness: 150,
+      damping: 12,
+    },
+  },
+};
+
+const greetingVariants = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.06,
+      delayChildren: 0.1,
+    },
+  },
+};
+
+const greetingCharVariants = {
+  hidden: { opacity: 0, x: -20, filter: "blur(8px)" },
+  visible: {
+    opacity: 1,
+    x: 0,
+    filter: "blur(0px)",
+    transition: {
+      type: "spring" as const,
+      stiffness: 200,
+      damping: 20,
+    },
+  },
+};
+
+export function Hero() {
+  const typedRole = useTypingEffect(roles);
+
+
 
   const handleDownloadCV = () => {
-    // Track analytics
     trackCVDownload();
-    
-    // Download CV from public folder
     const link = document.createElement('a');
     link.href = '/Mayank_Pandey_CV.pdf';
     link.download = 'Mayank_Pandey_CV.pdf';
@@ -31,6 +120,9 @@ export function Hero() {
   const scrollToContact = () => {
     document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
   };
+
+  const nameText = "Mayank Pandey";
+  const greetingText = "Hi, I'm";
 
   return (
     <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20 md:pt-0">
@@ -85,79 +177,130 @@ export function Hero() {
                   ease: "easeOut",
                 }}
               />
+              {/* Second ring - offset timing */}
+              <motion.div
+                className="absolute inset-0 rounded-full border border-secondary/20"
+                animate={{
+                  scale: [1, 1.35, 1],
+                  opacity: [0.3, 0, 0.3],
+                }}
+                transition={{
+                  duration: 2.5,
+                  repeat: Infinity,
+                  ease: "easeOut",
+                  delay: 0.5,
+                }}
+              />
             </div>
           </motion.div>
 
           {/* Text Content - Right Side */}
           <div className="order-2 text-center lg:text-left">
+            {/* Animated Greeting - Character reveal */}
             <motion.h1
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
-              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-4"
+              className="font-bold mb-4"
+              style={{ fontFamily: "'Syne', sans-serif" }}
             >
-              <span className="block mb-2">Hi, I&apos;m</span>
-              <span className="block text-primary">
-                Mayank Pandey
-              </span>
+              {/* Greeting - slightly smaller */}
+              <motion.span
+                className="block mb-1"
+                style={{ fontSize: "clamp(1.75rem, 4vw, 3rem)", lineHeight: 1.1 }}
+                variants={greetingVariants}
+                initial="hidden"
+                animate="visible"
+              >
+                {greetingText.split("").map((char, i) => (
+                  <motion.span
+                    key={i}
+                    variants={greetingCharVariants}
+                    className="inline-block"
+                    style={{ whiteSpace: char === " " ? "pre" : undefined }}
+                  >
+                    {char === " " ? "\u00A0" : char}
+                  </motion.span>
+                ))}
+              </motion.span>
+
+              {/* Name - fills the column on one line */}
+              <motion.span
+                className="block text-primary whitespace-nowrap"
+                style={{ fontSize: "clamp(2.5rem, 6vw, 5rem)", lineHeight: 1.05 }}
+                variants={nameVariants}
+                initial="hidden"
+                animate="visible"
+              >
+                {nameText.split("").map((char, i) => (
+                  <motion.span
+                    key={i}
+                    variants={charVariants}
+                    className="inline-block"
+                    style={{
+                      whiteSpace: char === " " ? "pre" : undefined,
+                      textShadow: "0 0 40px rgba(0, 163, 255, 0.4)",
+                    }}
+                  >
+                    {char === " " ? "\u00A0" : char}
+                  </motion.span>
+                ))}
+              </motion.span>
             </motion.h1>
 
+            {/* Typing Effect Role */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.6 }}
+              transition={{ duration: 0.8, delay: 1.0 }}
               className="mb-6"
             >
-              <span className="inline-block px-4 py-2 rounded-full glass-card text-xs sm:text-sm border border-primary/30 text-primary">
-                Web Developer • Cloud & DevOps Enthusiast • Innovator
+              <span className="inline-flex items-center px-4 py-2 rounded-full glass-card text-xs sm:text-sm border border-primary/30 text-primary min-h-[36px]">
+                <span className="mr-1">{">"}</span>
+                <span className="font-mono">{typedRole}</span>
+                <motion.span
+                  animate={{ opacity: [1, 0] }}
+                  transition={{ duration: 0.5, repeat: Infinity, repeatType: "reverse" }}
+                  className="ml-0.5 inline-block w-[2px] h-4 bg-primary"
+                />
               </span>
             </motion.div>
 
             <motion.p
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.7 }}
+              transition={{ duration: 0.8, delay: 1.2 }}
               className="text-base sm:text-lg text-muted-foreground mb-8 max-w-xl mx-auto lg:mx-0"
             >
               Full-Stack Developer crafting innovative web solutions with cutting-edge technologies.
               Passionate about AI, cloud computing, and building scalable applications.
             </motion.p>
 
-            {/* CTA Buttons */}
+            {/* CTA Buttons — shared spotlight container */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.9 }}
-              className="flex flex-col sm:flex-row items-center lg:items-start justify-center lg:justify-start gap-4 mb-8"
+              transition={{ duration: 0.8, delay: 1.4 }}
+              className="flex items-center justify-center lg:justify-start mb-8"
             >
-              <motion.button
-                whileHover={{ scale: 1.05, boxShadow: "0 0 30px rgba(0, 163, 255, 0.5)" }}
-                whileTap={{ scale: 0.95 }}
-                onClick={scrollToContact}
-                className="group relative px-8 py-4 rounded-lg bg-gradient-to-r from-primary to-secondary text-background font-medium overflow-hidden w-full sm:w-auto transition-all duration-300"
-              >
-                <span className="relative z-10 flex items-center justify-center gap-2">
-                  <Mail className="w-5 h-5" />
-                  Hire Me
-                </span>
-              </motion.button>
-
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={handleDownloadCV}
-                className="px-8 py-4 rounded-lg glass-card border border-primary/30 hover:border-primary/60 transition-all duration-300 font-medium w-full sm:w-auto flex items-center justify-center gap-2 hover:bg-primary/10"
-              >
-                <Download className="w-5 h-5" />
-                Download CV
-              </motion.button>
+              <SpotlightGroup
+                buttons={[
+                  {
+                    children: (<><Mail className="w-5 h-5" />Hire Me</>),
+                    onClick: scrollToContact,
+                    variant: "filled",
+                  },
+                  {
+                    children: (<><Download className="w-5 h-5" />Download CV</>),
+                    onClick: handleDownloadCV,
+                    variant: "outline",
+                  },
+                ]}
+              />
             </motion.div>
 
             {/* Social Links */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 1.1 }}
+              transition={{ duration: 0.8, delay: 1.6 }}
               className="flex items-center justify-center lg:justify-start gap-4"
             >
               <motion.a
@@ -192,17 +335,6 @@ export function Hero() {
           </div>
         </div>
       </div>
-
-      <style>{`
-        @keyframes gradient {
-          0% { background-position: 0% 50%; }
-          50% { background-position: 100% 50%; }
-          100% { background-position: 0% 50%; }
-        }
-        .animate-gradient {
-          animation: gradient 5s ease infinite;
-        }
-      `}</style>
     </section>
   );
 }
