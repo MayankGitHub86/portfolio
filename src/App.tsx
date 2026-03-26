@@ -9,7 +9,6 @@ import { Certifications } from "./components/Certifications";
 import { Experience } from "./components/Experience";
 import { CurrentlyWorkingOn } from "./components/CurrentlyWorkingOn";
 import { Contact } from "./components/Contact";
-import { Footer } from "./components/Footer";
 import { ThemeToggle } from "./components/ThemeToggle";
 import { LoadingScreen } from "./components/LoadingScreen";
 import { ScrollToTop } from "./components/ScrollToTop";
@@ -234,7 +233,15 @@ export default function App() {
           <Experience />
           <Contact />
         </main>
-        <Footer />
+        
+        {/* Simple Footer */}
+        <footer className="relative z-10 py-6 border-t border-white/10">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <p className="text-center text-sm text-muted-foreground">
+              © 2026 Mayank Pandey. All rights reserved.
+            </p>
+          </div>
+        </footer>
       </div>
 
       {/* Toast Notifications */}

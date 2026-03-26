@@ -143,7 +143,7 @@ export function Navbar() {
             : "bg-transparent"
         }`}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto pl-4 pr-4 sm:pr-6 lg:pr-8">
           <div className="relative flex items-center justify-between h-20 md:h-24">
 
             {/* Logo — left */}
