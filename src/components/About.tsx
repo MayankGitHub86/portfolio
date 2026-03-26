@@ -49,7 +49,7 @@ export function About() {
   const isInView = useInView(ref, { once: true, amount: 0.3 });
 
   return (
-    <section id="about" ref={ref} className="relative py-20 sm:py-32 overflow-hidden">
+    <section id="about" ref={ref} className="relative py-24 sm:py-32 overflow-hidden">
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <motion.div
@@ -62,14 +62,14 @@ export function About() {
             initial={{ opacity: 0, scale: 0.5 }}
             animate={isInView ? { opacity: 1, scale: 1 } : {}}
             transition={{ duration: 0.5 }}
-            className="inline-block text-primary mb-4"
+            className="inline-block text-primary mb-4 text-lg font-semibold"
           >
             Get To Know
           </motion.span>
-          <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4">
+          <h2 className="text-5xl sm:text-6xl md:text-7xl font-bold mb-6">
             About <span className="text-neon-blue">Me</span>
           </h2>
-          <div className="h-1 w-20 bg-gradient-to-r from-primary to-secondary mx-auto rounded-full" />
+          <div className="h-1.5 w-24 bg-gradient-to-r from-primary to-secondary mx-auto rounded-full" />
         </motion.div>
 
         {/* Content Grid */}
@@ -81,22 +81,23 @@ export function About() {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="relative"
           >
-            <div className="relative glass-card rounded-2xl p-8 neon-border hover:neon-glow-blue transition-all duration-500">
+            <div className="relative glass-card rounded-3xl p-10 neon-border hover:neon-glow-blue transition-all duration-500">
               {/* 3D Card Effect */}
               <motion.div
                 whileHover={{ rotateY: 5, rotateX: 5 }}
                 transition={{ duration: 0.3 }}
-                className="relative aspect-square rounded-xl overflow-hidden"
+                className="relative rounded-2xl overflow-hidden"
+                style={{ aspectRatio: '3/4' }}
               >
                 <img 
                   src={aboutImage} 
                   alt="Mayank Pandey - Full-Stack Developer" 
-                  className="w-full h-full object-cover rounded-xl"
+                  className="w-full h-full object-cover rounded-2xl"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent flex items-end p-6">
+                <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-transparent to-transparent flex items-end p-8">
                   <div className="text-left">
-                    <h3 className="text-2xl font-bold mb-1">Mayank Pandey</h3>
-                    <p className="text-muted-foreground">Full-Stack Developer</p>
+                    <h3 className="text-3xl font-bold mb-2">Mayank Pandey</h3>
+                    <p className="text-lg text-muted-foreground">Full-Stack Developer</p>
                   </div>
                 </div>
               </motion.div>
@@ -108,39 +109,39 @@ export function About() {
             initial={{ opacity: 0, x: 50 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="space-y-6"
+            className="space-y-5"
           >
-            <div className="glass-card rounded-xl p-6 border border-primary/20">
+            <div className="glass-card rounded-2xl p-6 border border-primary/20">
               <h3 className="text-2xl font-bold mb-4 text-primary">Profile Summary</h3>
-              <p className="text-muted-foreground leading-relaxed">
+              <p className="text-muted-foreground leading-relaxed text-base">
                 Passionate Full-Stack Developer with expertise in modern web technologies and cloud computing. 
                 Currently pursuing B.Tech in Computer Science and Engineering at Lovely Professional University. 
                 Experienced in building scalable applications using React, Node.js, and cutting-edge AI integrations.
               </p>
             </div>
 
-            <div className="glass-card rounded-xl p-6 border border-primary/20">
+            <div className="glass-card rounded-2xl p-6 border border-primary/20">
               <div className="flex items-center gap-3 mb-4">
                 <GraduationCap className="w-6 h-6 text-secondary" />
                 <h3 className="text-xl font-bold">Education</h3>
               </div>
               <div className="space-y-3">
                 <div>
-                  <h4 className="font-semibold text-primary">Lovely Professional University</h4>
-                  <p className="text-sm text-muted-foreground">
+                  <h4 className="font-semibold text-primary text-base">Lovely Professional University</h4>
+                  <p className="text-sm text-muted-foreground mt-1">
                     Bachelor of Technology - Computer Science and Engineering
                   </p>
                   <p className="text-sm text-muted-foreground">CGPA: 6.28 • Since Aug 2023</p>
                 </div>
                 <div>
-                  <h4 className="font-semibold text-primary">St. Xaviers Public School</h4>
-                  <p className="text-sm text-muted-foreground">Intermediate - 78% • Apr 2021 - Mar 2022</p>
+                  <h4 className="font-semibold text-primary text-base">St. Xaviers Public School</h4>
+                  <p className="text-sm text-muted-foreground mt-1">Intermediate - 78% • Apr 2021 - Mar 2022</p>
                   <p className="text-sm text-muted-foreground">Matriculation - 79%</p>
                 </div>
               </div>
             </div>
 
-            <div className="glass-card rounded-xl p-6 border border-primary/20">
+            <div className="glass-card rounded-2xl p-6 border border-primary/20">
               <h3 className="text-xl font-bold mb-4">Core Competencies</h3>
               <div className="grid grid-cols-2 gap-3">
                 {["Problem Solving", "Team Player", "Project Management", "Adaptability"].map((skill, i) => (
@@ -174,19 +175,19 @@ export function About() {
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: 0.8 + index * 0.1 }}
               whileHover={{ scale: 1.05, y: -5 }}
-              className="glass-card rounded-xl p-6 text-center border border-primary/20 hover:border-primary/40 transition-all duration-300"
+              className="glass-card rounded-2xl p-8 text-center border border-primary/20 hover:border-primary/40 transition-all duration-300"
             >
               <motion.div
                 whileHover={{ rotate: 360 }}
                 transition={{ duration: 0.6 }}
-                className="inline-flex items-center justify-center w-12 h-12 rounded-lg bg-gradient-to-br from-primary/20 to-secondary/20 mb-4"
+                className="inline-flex items-center justify-center w-16 h-16 rounded-xl bg-gradient-to-br from-primary/20 to-secondary/20 mb-5"
               >
-                <stat.icon className="w-6 h-6 text-primary" />
+                <stat.icon className="w-8 h-8 text-primary" />
               </motion.div>
-              <div className="mb-2">
+              <div className="mb-3">
                 <AnimatedCounter value={stat.value} suffix={stat.suffix} />
               </div>
-              <p className="text-sm text-muted-foreground">{stat.label}</p>
+              <p className="text-base text-muted-foreground font-medium">{stat.label}</p>
             </motion.div>
           ))}
         </motion.div>

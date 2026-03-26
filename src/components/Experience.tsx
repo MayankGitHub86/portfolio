@@ -2,7 +2,7 @@
 
 import { motion, useInView } from "motion/react";
 import { useRef } from "react";
-import { Briefcase, GraduationCap, Award, ExternalLink } from "lucide-react";
+import { Briefcase, GraduationCap } from "lucide-react";
 
 const experiences = [
   {
@@ -49,43 +49,12 @@ const experiences = [
   },
 ];
 
-const certifications = [
-  {
-    title: "The Bits and Bytes of Computer Networking",
-    provider: "Google",
-    date: "Sep 2024",
-    link: "https://coursera.org/share/d99776de4b928c4df6354ab1a88c0c3b",
-    color: "#4285F4",
-  },
-  {
-    title: "Introduction to Hardware and Operating Systems",
-    provider: "IBM",
-    date: "Oct 2024",
-    link: null,
-    color: "#006699",
-  },
-  {
-    title: "Responsive Web Design",
-    provider: "FreeCodeCamp",
-    date: "Oct 2024",
-    link: null,
-    color: "#0A0A23",
-  },
-  {
-    title: "Social Media Marketing",
-    provider: "Coursera",
-    date: "Oct 2023",
-    link: null,
-    color: "#0056D2",
-  },
-];
-
 export function Experience() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.1 });
 
   return (
-    <section id="experience" ref={ref} className="relative py-20 sm:py-32 overflow-hidden">
+    <section id="experience" ref={ref} className="relative py-24 sm:py-32 overflow-hidden">
       <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Section Header */}
@@ -99,14 +68,14 @@ export function Experience() {
             initial={{ opacity: 0, scale: 0.5 }}
             animate={isInView ? { opacity: 1, scale: 1 } : {}}
             transition={{ duration: 0.5 }}
-            className="inline-block text-primary mb-4 font-mono text-sm"
+            className="inline-block text-primary mb-4 font-mono text-lg font-semibold"
           >
             My Journey
           </motion.span>
-          <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4">
+          <h2 className="text-5xl sm:text-6xl md:text-7xl font-bold mb-6">
             Experience &amp; <span className="text-neon-purple">Training</span>
           </h2>
-          <div className="h-1 w-20 bg-gradient-to-r from-secondary to-primary mx-auto rounded-full" />
+          <div className="h-1.5 w-24 bg-gradient-to-r from-secondary to-primary mx-auto rounded-full" />
         </motion.div>
 
         {/* ── Vertical Timeline ── */}
@@ -128,57 +97,6 @@ export function Experience() {
             ))}
           </div>
         </div>
-
-        {/* ── Certifications ── */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, delay: 0.6 }}
-          className="mt-24"
-        >
-          <div className="text-center mb-10">
-            <h3 className="text-3xl sm:text-4xl font-bold mb-4">
-              <span className="text-neon-blue">Certifications</span>
-            </h3>
-            <div className="h-1 w-16 bg-gradient-to-r from-primary to-secondary mx-auto rounded-full" />
-          </div>
-
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
-            {certifications.map((cert, i) => (
-              <motion.a
-                key={cert.title}
-                href={cert.link || undefined}
-                target={cert.link ? "_blank" : undefined}
-                rel={cert.link ? "noopener noreferrer" : undefined}
-                initial={{ opacity: 0, y: 30 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.5, delay: 0.8 + i * 0.1 }}
-                whileHover={{ y: -8, scale: 1.03 }}
-                className={`glass-card rounded-xl p-5 border border-primary/15 hover:border-primary/40 transition-all duration-300 text-center ${
-                  cert.link ? "cursor-pointer" : "cursor-default"
-                }`}
-              >
-                <div
-                  className="w-12 h-12 mx-auto mb-3 rounded-xl flex items-center justify-center border border-white/10"
-                  style={{ background: `${cert.color}22` }}
-                >
-                  <Award className="w-6 h-6" style={{ color: cert.color }} />
-                </div>
-                <p className="text-xs font-semibold mb-1" style={{ color: cert.color }}>
-                  {cert.provider}
-                </p>
-                <p className="text-sm font-medium leading-snug mb-2">{cert.title}</p>
-                <p className="text-xs text-muted-foreground">{cert.date}</p>
-                {cert.link && (
-                  <div className="mt-2 flex items-center justify-center gap-1 text-xs text-primary">
-                    <ExternalLink className="w-3 h-3" />
-                    <span>Verify</span>
-                  </div>
-                )}
-              </motion.a>
-            ))}
-          </div>
-        </motion.div>
       </div>
     </section>
   );

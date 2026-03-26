@@ -10,7 +10,6 @@ const navItems = [
   { name: "About", href: "#about" },
   { name: "Skills", href: "#skills" },
   { name: "Projects", href: "#projects" },
-  { name: "Current", href: "#current-work" },
   { name: "Experience", href: "#experience" },
   { name: "Contact", href: "#contact" },
 ];
@@ -145,7 +144,7 @@ export function Navbar() {
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="relative flex items-center justify-between h-16 md:h-20">
+          <div className="relative flex items-center justify-between h-20 md:h-24">
 
             {/* Logo — left */}
             <motion.div whileHover={{ scale: 1.05 }} className="flex items-center z-10">
@@ -153,7 +152,7 @@ export function Navbar() {
                 className="font-bold tracking-tight"
                 style={{
                   fontFamily: "'Syne', sans-serif",
-                  fontSize: "1.4rem",
+                  fontSize: "2rem",
                   background: "linear-gradient(135deg, #00a3ff, #a020f0)",
                   WebkitBackgroundClip: "text",
                   WebkitTextFillColor: "transparent",
@@ -169,7 +168,7 @@ export function Navbar() {
               <div
                 ref={navContainerRef}
                 className={cn(
-                  "relative flex items-center h-11 rounded-full overflow-hidden transition-all duration-300",
+                  "relative flex items-center h-14 rounded-full overflow-hidden transition-all duration-300",
                   isScrolled
                     ? "bg-muted/40 backdrop-blur-xl border border-primary/10"
                     : "bg-background/30 backdrop-blur-xl border border-white/[0.06]"
@@ -179,14 +178,14 @@ export function Navbar() {
                 }}
               >
                 {/* Nav items */}
-                <ul className="relative flex items-center h-full px-2 gap-0 z-10">
+                <ul className="relative flex items-center h-full px-3 gap-1 z-10">
                   {navItems.map((item, idx) => (
                     <li key={item.name} className="relative h-full flex items-center justify-center">
                       <button
                         data-nav-index={idx}
                         onClick={() => handleNavClick(item.href)}
                         className={cn(
-                          "px-4 py-2 text-sm font-medium transition-colors duration-200 rounded-full",
+                          "px-5 py-2.5 text-base font-medium transition-colors duration-200 rounded-full",
                           "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30",
                           activeSection === item.href.substring(1)
                             ? "text-white"

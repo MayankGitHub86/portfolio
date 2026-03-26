@@ -3,6 +3,10 @@
 import { motion, useInView, useMotionValue, useTransform, useSpring } from "motion/react";
 import { useRef, useState } from "react";
 import { ExternalLink, Github, Sparkles, X, Layers, Target, Zap, ArrowRight } from "lucide-react";
+import intelliclaimPreview from "../assets/intelliclaim-preview.png";
+import solvehubGif from "../assets/solvehub.gif";
+import vartalapaiImg from "../assets/vartalapai.jpg";
+import campusgatewayImg from "../assets/campusgateway.jpg";
 
 const projects = [
   {
@@ -14,7 +18,8 @@ const projects = [
     date: "Since Sep 2025",
     gradient: "from-primary/20 to-blue-500/20",
     githubUrl: "https://github.com/MayankGitHub86/Intelliclaim",
-    liveUrl: "https://intelliclaim.vercel.app",
+    liveUrl: "https://intelliclaim-xi.vercel.app/",
+    image: intelliclaimPreview,
     caseStudy: {
       problem: "Insurance claim processing was manual, slow, and error-prone — taking hours to get cost estimates. Users needed instant, accurate assessments.",
       approach: "Built an AI-powered pipeline that analyzes claim documents, extracts key data, cross-references damage patterns, and generates professional estimates using advanced AI models.",
@@ -31,42 +36,14 @@ const projects = [
     date: "Since Dec 2024",
     gradient: "from-emerald-400/20 to-cyan-500/20",
     githubUrl: "https://github.com/MayankGitHub86/SolveHub",
-    liveUrl: "https://solvehub.vercel.app",
+    liveUrl: "https://solvehub-frontend.vercel.app/",
+    image: solvehubGif,
     caseStudy: {
       problem: "Developers needed a clean, organized platform to practice DSA problems with proper implementations and explanations — not just random problem sets.",
       approach: "Designed a categorized problem-solving platform with interactive code editors, visual algorithm demonstrations, and structured learning paths.",
       results: ["30+ DSA implementations", "Interactive code playground", "Category-based organization", "Modern TypeScript architecture"],
       architecture: ["React + TypeScript", "Vite Build System", "Tailwind Styling", "Component Library"],
     },
-  },
-  {
-    title: "Venue Finder Chatbot",
-    description: "Interactive chatbot helping users discover nearby event venues by city name. Features location-based search using APIs and a user-friendly chat interface with dynamic venue suggestions.",
-    techStack: ["HTML", "CSS", "JavaScript", "API Integration", "Gemini AI"],
-    color: "from-secondary to-purple-400",
-    status: "Completed",
-    date: "Aug 2025",
-    gradient: "from-secondary/20 to-purple-500/20",
-    githubUrl: "https://github.com/MayankGitHub86/Venue-Finder-Chatbot",
-    liveUrl: null,
-    caseStudy: {
-      problem: "Finding suitable event venues required browsing multiple sites. Users wanted a conversational way to discover venues based on city and preferences.",
-      approach: "Built a chatbot powered by Gemini AI that understands natural language queries, fetches venue data via APIs, and presents results in a chat-friendly format.",
-      results: ["Natural language venue search", "Real-time API integration", "Conversational UI experience", "City-based filtering"],
-      architecture: ["Vanilla Frontend", "Gemini AI API", "Location APIs", "Chat Engine"],
-    },
-  },
-  {
-    title: "Online Test Planner",
-    description: "Web-based quiz platform covering Science Literacy and Temperature Measurement topics. Features dynamic question rendering, form validation, instant feedback, and result calculation.",
-    techStack: ["HTML", "CSS", "JavaScript", "PHP"],
-    color: "from-cyan-400 to-primary",
-    status: "Completed",
-    date: "Jul 2025",
-    gradient: "from-cyan-400/20 to-primary/20",
-    githubUrl: "https://github.com/MayankGitHub86/Online-Test-Planner",
-    liveUrl: null,
-    caseStudy: null,
   },
   {
     title: "Vartalaap.AI",
@@ -78,6 +55,7 @@ const projects = [
     gradient: "from-pink-400/20 to-secondary/20",
     githubUrl: "https://github.com/MayankGitHub86/Vartalaap.AI",
     liveUrl: null,
+    image: vartalapaiImg,
     caseStudy: null,
   },
   {
@@ -90,6 +68,7 @@ const projects = [
     gradient: "from-green-400/20 to-primary/20",
     githubUrl: "https://github.com/MayankGitHub86/Campus-Gateway",
     liveUrl: null,
+    image: campusgatewayImg,
     caseStudy: {
       problem: "L&T Faridabad campus needed a centralized gateway system to manage campus operations, replacing fragmented manual processes.",
       approach: "Led full-stack development and deployment on enterprise infrastructure using IIS web server running on Hyper-V virtualization — a production-grade campus management solution.",
@@ -345,122 +324,45 @@ function CaseStudyModal({ project, onClose }: { project: typeof projects[0]; onC
 function ProjectCard({ project, index }: { project: typeof projects[0]; index: number }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.3 });
-  const [isHovered, setIsHovered] = useState(false);
   const [showCaseStudy, setShowCaseStudy] = useState(false);
 
   return (
     <>
       <motion.div
         ref={ref}
-        initial={{ opacity: 0, y: 50, filter: "blur(10px)" }}
-        animate={isInView ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}}
+        initial={{ opacity: 0, y: 50 }}
+        animate={isInView ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 0.6, delay: index * 0.15 }}
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
         className="group relative"
       >
-        <TiltCard className="relative h-full">
-          <div className="relative h-full glass-card rounded-2xl p-6 sm:p-8 border border-primary/20 hover:border-primary/40 overflow-hidden transition-all duration-500">
-            {/* Background Gradient */}
-            <div className={`absolute inset-0 bg-gradient-to-br ${project.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
-
-            {/* Animated Border on Hover */}
-            <motion.div
-              className="absolute inset-0 rounded-2xl"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: isHovered ? 1 : 0 }}
-              style={{
-                background: `linear-gradient(90deg, transparent, var(--color-primary), transparent)`,
-                backgroundSize: "200% 100%",
-              }}
-            >
-              <motion.div
-                animate={{ backgroundPosition: isHovered ? ["0% 0%", "200% 0%"] : "0% 0%" }}
-                transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-                className="absolute inset-0 rounded-2xl"
-                style={{
-                  background: `linear-gradient(90deg, transparent, var(--color-primary), transparent)`,
-                  backgroundSize: "200% 100%",
-                  mask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
-                  maskComposite: "exclude",
-                  padding: "1px",
-                }}
+        <div className="relative h-full glass-card rounded-3xl overflow-hidden border border-primary/20 hover:border-primary/40 transition-all duration-500">
+          {/* Project Image with Overlay */}
+          {project.image && (
+            <div className="relative h-64 sm:h-80 overflow-hidden">
+              <img
+                src={project.image}
+                alt={`${project.title} preview`}
+                className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700"
               />
-            </motion.div>
-
-            {/* Content */}
-            <div className="relative z-10">
-              {/* Header */}
-              <div className="flex items-start justify-between mb-4">
-                <div className="flex-1">
-                  <div className="flex items-center gap-3 mb-2">
-                    <motion.div
-                      whileHover={{ rotate: 360 }}
-                      transition={{ duration: 0.6 }}
-                      className={`w-12 h-12 rounded-lg bg-gradient-to-br ${project.color} flex items-center justify-center`}
-                    >
-                      <Sparkles className="w-6 h-6 text-white" />
-                    </motion.div>
-                    <div>
-                      <h3 className="text-xl sm:text-2xl font-bold">{project.title}</h3>
-                      <div className="flex items-center gap-2 mt-1">
-                        <span className="text-xs text-muted-foreground">{project.date}</span>
-                        <span className={`px-2 py-0.5 rounded-full text-xs ${
-                          project.status === "Active" 
-                            ? "bg-green-500/20 text-green-400 border border-green-500/30" 
-                            : "bg-blue-500/20 text-blue-400 border border-blue-500/30"
-                        }`}>
-                          {project.status}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Description */}
-              <p className="text-muted-foreground mb-6 leading-relaxed">
-                {project.description}
-              </p>
-
-              {/* Tech Stack */}
-              <div className="mb-6">
-                <h4 className="text-sm font-semibold mb-3 text-primary">Tech Stack</h4>
-                <div className="flex flex-wrap gap-2">
-                  {project.techStack.map((tech, i) => (
-                    <motion.span
-                      key={tech}
-                      initial={{ opacity: 0, scale: 0.8 }}
-                      animate={isInView ? { opacity: 1, scale: 1 } : {}}
-                      transition={{ duration: 0.3, delay: 0.1 + i * 0.05 }}
-                      whileHover={{ scale: 1.1, y: -2 }}
-                      className="px-3 py-1.5 rounded-lg text-xs font-medium bg-muted/30 border border-primary/20 hover:border-primary/40 hover:bg-primary/10 transition-all duration-300"
-                      style={{
-                        boxShadow: isHovered ? "0 0 10px rgba(0, 163, 255, 0.3)" : "none",
-                      }}
-                    >
-                      {tech}
-                    </motion.span>
-                  ))}
-                </div>
-              </div>
-
-              {/* Actions */}
-              <div className="flex gap-3">
+              {/* Dark Overlay */}
+              <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-transparent" />
+              
+              {/* Hover Buttons - Centered */}
+              <div className="absolute inset-0 flex items-center justify-center gap-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black/40">
                 {project.liveUrl && (
                   <motion.a
                     href={project.liveUrl}
                     target="_blank"
                     rel="noopener noreferrer"
+                    initial={{ y: 20, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    transition={{ delay: 0.1 }}
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                    className={`flex-1 px-4 py-2.5 rounded-lg bg-gradient-to-r ${project.color} text-white font-medium flex items-center justify-center gap-2 hover:shadow-lg transition-all duration-300`}
-                    style={{
-                      boxShadow: isHovered ? "0 0 20px rgba(0, 163, 255, 0.4)" : "none",
-                    }}
+                    className="px-10 py-4 rounded-full bg-yellow-500 hover:bg-yellow-400 text-black font-bold flex items-center gap-3 transition-all duration-300 shadow-xl text-xl"
                   >
-                    <ExternalLink className="w-4 h-4" />
-                    View Live
+                    <ExternalLink className="w-6 h-6" strokeWidth={2.5} />
+                    <span>Demo</span>
                   </motion.a>
                 )}
                 {project.githubUrl && (
@@ -468,59 +370,62 @@ function ProjectCard({ project, index }: { project: typeof projects[0]; index: n
                     href={project.githubUrl}
                     target="_blank"
                     rel="noopener noreferrer"
+                    initial={{ y: 20, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    transition={{ delay: 0.15 }}
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                    className={`${project.liveUrl ? '' : 'flex-1'} px-4 py-2.5 rounded-lg glass-card border border-primary/30 hover:border-primary/60 hover:bg-primary/10 transition-all duration-300 flex items-center justify-center gap-2`}
+                    className="px-10 py-4 rounded-full bg-gray-900/90 hover:bg-gray-900 border-2 border-gray-700 text-white font-bold flex items-center gap-3 transition-all duration-300 shadow-xl text-xl"
                   >
-                    <Github className="w-5 h-5 text-primary" />
-                    {!project.liveUrl && <span>View Code</span>}
+                    <Github className="w-6 h-6" strokeWidth={2} />
+                    <span>Code</span>
                   </motion.a>
-                )}
-                {project.caseStudy && (
-                  <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    onClick={() => setShowCaseStudy(true)}
-                    className="px-4 py-2.5 rounded-lg bg-gradient-to-r from-secondary/20 to-primary/20 border border-secondary/30 hover:border-secondary/60 transition-all duration-300 flex items-center justify-center gap-2 text-sm font-medium"
-                  >
-                    <Layers className="w-4 h-4 text-secondary" />
-                    <span className="hidden sm:inline">Case Study</span>
-                  </motion.button>
                 )}
               </div>
             </div>
+          )}
 
-            {/* Floating Particles */}
-            {isHovered && (
-              <>
-                {[...Array(5)].map((_, i) => (
-                  <motion.div
-                    key={i}
-                    className="absolute w-1 h-1 bg-primary rounded-full"
-                    initial={{ 
-                      x: Math.random() * 100 - 50, 
-                      y: Math.random() * 100 - 50,
-                      opacity: 0 
-                    }}
-                    animate={{ 
-                      y: [-20, -60],
-                      opacity: [0, 1, 0]
-                    }}
-                    transition={{
-                      duration: 2,
-                      repeat: Infinity,
-                      delay: i * 0.2,
-                    }}
-                    style={{
-                      left: `${Math.random() * 100}%`,
-                      top: `${Math.random() * 100}%`,
-                    }}
-                  />
-                ))}
-              </>
+          {/* Content Section */}
+          <div className="p-6 sm:p-8">
+            {/* Title and Featured Badge */}
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-3xl sm:text-4xl font-bold" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>{project.title}</h3>
+              <span className="px-4 py-1.5 rounded-full text-xs font-medium border-2 border-yellow-600/60 text-yellow-500 bg-yellow-500/10 whitespace-nowrap uppercase tracking-wider">
+                Featured
+              </span>
+            </div>
+
+            {/* Description */}
+            <p className="text-muted-foreground mb-6 leading-relaxed text-base">
+              {project.description}
+            </p>
+
+            {/* Tech Stack */}
+            <div className="flex flex-wrap gap-2 mb-6">
+              {project.techStack.map((tech) => (
+                <span
+                  key={tech}
+                  className="px-4 py-2 rounded-full text-sm font-medium bg-muted/30 border border-primary/20 hover:border-primary/40 hover:bg-primary/10 transition-all duration-300"
+                >
+                  {tech}
+                </span>
+              ))}
+            </div>
+
+            {/* Case Study Button */}
+            {project.caseStudy && (
+              <motion.button
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                onClick={() => setShowCaseStudy(true)}
+                className="w-full px-4 py-3 rounded-lg bg-gradient-to-r from-secondary/20 to-primary/20 border border-secondary/30 hover:border-secondary/60 transition-all duration-300 flex items-center justify-center gap-2 text-sm font-medium"
+              >
+                <Layers className="w-4 h-4 text-secondary" />
+                <span>View Case Study</span>
+              </motion.button>
             )}
           </div>
-        </TiltCard>
+        </div>
       </motion.div>
 
       {/* Case Study Modal */}
@@ -554,7 +459,7 @@ export function Projects() {
   });
 
   return (
-    <section id="projects" ref={ref} className="relative py-20 sm:py-32 overflow-hidden">
+    <section id="projects" ref={ref} className="relative py-24 sm:py-32 overflow-hidden">
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <motion.div
@@ -567,14 +472,14 @@ export function Projects() {
             initial={{ opacity: 0, scale: 0.5 }}
             animate={isInView ? { opacity: 1, scale: 1 } : {}}
             transition={{ duration: 0.5 }}
-            className="inline-block text-primary mb-4"
+            className="inline-block text-primary mb-4 text-lg font-semibold"
           >
             My Recent Work
           </motion.span>
-          <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4">
+          <h2 className="text-5xl sm:text-6xl md:text-7xl font-bold mb-6">
             Featured <span className="text-neon-blue">Projects</span>
           </h2>
-          <div className="h-1 w-20 bg-gradient-to-r from-primary to-secondary mx-auto rounded-full" />
+          <div className="h-1.5 w-24 bg-gradient-to-r from-primary to-secondary mx-auto rounded-full" />
           <motion.p
             initial={{ opacity: 0 }}
             animate={isInView ? { opacity: 1 } : {}}

@@ -2,7 +2,7 @@
 
 import { motion, useInView } from "motion/react";
 import { useRef, useState } from "react";
-import { Code, Server, Wrench, Cpu, Award } from "lucide-react";
+import { Code, Server, Wrench, Cpu, Award, Github, ExternalLink } from "lucide-react";
 
 const skillCategories = [
   {
@@ -127,7 +127,7 @@ export function Skills() {
   const isInView = useInView(ref, { once: true, amount: 0.2 });
 
   return (
-    <section id="skills" ref={ref} className="relative py-20 sm:py-32 overflow-hidden">
+    <section id="skills" ref={ref} className="relative py-24 sm:py-32 overflow-hidden">
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <motion.div
@@ -140,14 +140,14 @@ export function Skills() {
             initial={{ opacity: 0, scale: 0.5 }}
             animate={isInView ? { opacity: 1, scale: 1 } : {}}
             transition={{ duration: 0.5 }}
-            className="inline-block text-primary mb-4"
+            className="inline-block text-primary mb-4 text-lg font-semibold"
           >
             What I Bring To The Table
           </motion.span>
-          <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4">
+          <h2 className="text-5xl sm:text-6xl md:text-7xl font-bold mb-6">
             My <span className="text-neon-purple">Skills</span>
           </h2>
-          <div className="h-1 w-20 bg-gradient-to-r from-secondary to-primary mx-auto rounded-full" />
+          <div className="h-1.5 w-24 bg-gradient-to-r from-secondary to-primary mx-auto rounded-full" />
           <motion.p
             initial={{ opacity: 0 }}
             animate={isInView ? { opacity: 1 } : {}}
@@ -207,48 +207,210 @@ export function Skills() {
           </div>
         </motion.div>
 
-        {/* Certifications Badge */}
+        {/* Coding Profiles Section */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, delay: 0.4 }}
-          className="mt-16"
+          transition={{ duration: 0.8, delay: 0.5 }}
+          className="mt-24 sm:mt-32"
         >
-          <div className="glass-card rounded-2xl p-8 border border-primary/20 text-center">
-            <h3 className="text-2xl font-bold mb-6">Certified & Trained</h3>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              {[
-                { name: "Google - Networking", provider: "Google", link: "https://coursera.org/share/d99776de4b928c4df6354ab1a88c0c3b" },
-                { name: "IBM - Hardware & OS", provider: "IBM", link: null },
-                { name: "Responsive Web Design", provider: "FreeCodeCamp", link: null },
-                { name: "W3Grads FLAMES '25", provider: "W3Grads", link: null },
-              ].map((cert, index) => (
-                <motion.a
-                  key={cert.name}
-                  href={cert.link || undefined}
-                  target={cert.link ? "_blank" : undefined}
-                  rel={cert.link ? "noopener noreferrer" : undefined}
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={isInView ? { opacity: 1, scale: 1 } : {}}
-                  transition={{ duration: 0.4, delay: 0.6 + index * 0.1 }}
-                  whileHover={{ scale: 1.05, y: -5 }}
-                  className={`p-4 rounded-xl bg-gradient-to-br from-muted/30 to-muted/10 border border-primary/10 hover:border-primary/30 transition-all duration-300 ${
-                    cert.link ? 'cursor-pointer' : 'cursor-default'
-                  }`}
-                >
-                  <div className="w-10 h-10 mx-auto mb-3 rounded-lg bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center">
-                    <motion.div
-                      animate={{ rotate: [0, 360] }}
-                      transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                    >
-                      <Award className="w-5 h-5 text-primary" />
-                    </motion.div>
+          <div className="text-center mb-8">
+            <p className="text-lg font-semibold uppercase tracking-[0.3em] text-yellow-600 mb-4">
+              Problem Solving
+            </p>
+            <h3 className="text-5xl sm:text-6xl md:text-7xl font-bold mb-6">
+              Coding <span className="text-yellow-500">Profiles</span>
+            </h3>
+            <p className="text-lg text-muted-foreground mt-6 max-w-2xl mx-auto">
+              Consistent problem-solving across top competitive programming platforms.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+            {/* LeetCode Card */}
+            <motion.a
+              href="https://leetcode.com/u/DRa00ooUAG/"
+              target="_blank"
+              rel="noopener noreferrer"
+              initial={{ opacity: 0, x: -30 }}
+              animate={isInView ? { opacity: 1, x: 0 } : {}}
+              transition={{ duration: 0.6, delay: 0.6 }}
+              whileHover={{ scale: 1.02, y: -5 }}
+              className="glass-card rounded-2xl p-6 border border-white/10 hover:border-yellow-600/40 transition-all duration-300 group relative"
+            >
+              {/* Header */}
+              <div className="flex items-center justify-between mb-6">
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 rounded-full bg-yellow-600/20 flex items-center justify-center">
+                    <span className="text-yellow-500 font-bold text-2xl">L</span>
                   </div>
-                  <p className="text-sm font-medium mb-1">{cert.provider}</p>
-                  <p className="text-xs text-muted-foreground">{cert.name}</p>
-                </motion.a>
-              ))}
-            </div>
+                  <div>
+                    <p className="font-semibold text-base">@DRa00ooUAG</p>
+                    <p className="text-xs text-muted-foreground">LeetCode</p>
+                  </div>
+                </div>
+                <ExternalLink className="w-4 h-4 text-muted-foreground group-hover:text-yellow-500 transition-colors" />
+              </div>
+
+              {/* Problems Solved */}
+              <div className="text-center mb-6">
+                <p className="text-6xl font-bold text-yellow-500 mb-1">59</p>
+                <p className="text-sm text-muted-foreground">Problems Solved</p>
+              </div>
+
+              {/* Progress Bars */}
+              <div className="space-y-3 mb-6">
+                <div>
+                  <div className="flex items-center justify-between mb-1.5">
+                    <div className="flex items-center gap-2">
+                      <div className="w-2 h-2 rounded-full bg-green-500"></div>
+                      <span className="text-sm">Easy</span>
+                    </div>
+                    <span className="text-sm font-mono text-green-500">17/933</span>
+                  </div>
+                  <div className="h-1.5 bg-white/5 rounded-full overflow-hidden">
+                    <div className="h-full bg-green-500 rounded-full" style={{ width: '1.8%' }}></div>
+                  </div>
+                </div>
+                <div>
+                  <div className="flex items-center justify-between mb-1.5">
+                    <div className="flex items-center gap-2">
+                      <div className="w-2 h-2 rounded-full bg-yellow-500"></div>
+                      <span className="text-sm">Medium</span>
+                    </div>
+                    <span className="text-sm font-mono text-yellow-500">36/2030</span>
+                  </div>
+                  <div className="h-1.5 bg-white/5 rounded-full overflow-hidden">
+                    <div className="h-full bg-yellow-500 rounded-full" style={{ width: '1.8%' }}></div>
+                  </div>
+                </div>
+                <div>
+                  <div className="flex items-center justify-between mb-1.5">
+                    <div className="flex items-center gap-2">
+                      <div className="w-2 h-2 rounded-full bg-red-500"></div>
+                      <span className="text-sm">Hard</span>
+                    </div>
+                    <span className="text-sm font-mono text-red-500">6/916</span>
+                  </div>
+                  <div className="h-1.5 bg-white/5 rounded-full overflow-hidden">
+                    <div className="h-full bg-red-500 rounded-full" style={{ width: '0.7%' }}></div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Bottom Stats */}
+              <div className="flex items-center justify-around pt-4 border-t border-white/10">
+                <div className="text-center">
+                  <p className="text-3xl font-bold text-green-500">17</p>
+                  <p className="text-xs text-muted-foreground uppercase tracking-wider">Easy</p>
+                </div>
+                <div className="text-center">
+                  <p className="text-3xl font-bold text-yellow-500">36</p>
+                  <p className="text-xs text-muted-foreground uppercase tracking-wider">Medium</p>
+                </div>
+                <div className="text-center">
+                  <p className="text-3xl font-bold text-red-500">6</p>
+                  <p className="text-xs text-muted-foreground uppercase tracking-wider">Hard</p>
+                </div>
+              </div>
+            </motion.a>
+
+            {/* GitHub Card */}
+            <motion.a
+              href="https://github.com/MayankGitHub86"
+              target="_blank"
+              rel="noopener noreferrer"
+              initial={{ opacity: 0, x: 30 }}
+              animate={isInView ? { opacity: 1, x: 0 } : {}}
+              transition={{ duration: 0.6, delay: 0.7 }}
+              whileHover={{ scale: 1.02, y: -5 }}
+              className="glass-card rounded-2xl p-6 border border-white/10 hover:border-white/20 transition-all duration-300 group relative"
+            >
+              {/* Header */}
+              <div className="flex items-center justify-between mb-6">
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 rounded-2xl bg-white/10 flex items-center justify-center">
+                    <Github className="w-6 h-6 text-white" />
+                  </div>
+                  <div>
+                    <p className="font-bold text-base">@MayankGitHub86</p>
+                    <p className="text-xs text-muted-foreground">GitHub</p>
+                  </div>
+                </div>
+                <ExternalLink className="w-4 h-4 text-muted-foreground group-hover:text-white transition-colors" />
+              </div>
+
+              {/* Quote */}
+              <div className="text-center mb-6">
+                <p className="text-sm text-muted-foreground italic">"An innovative and creative Developer"</p>
+              </div>
+
+              {/* Stats Grid - Compact */}
+              <div className="grid grid-cols-2 gap-3 mb-6">
+                <div className="text-center p-4 rounded-xl bg-white/5 border border-white/10">
+                  <div className="flex items-center justify-center mb-2">
+                    <svg className="w-5 h-5 text-blue-400" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM4 7a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1zM2 11a2 2 0 012-2h12a2 2 0 012 2v4a2 2 0 01-2 2H4a2 2 0 01-2-2v-4z" />
+                    </svg>
+                  </div>
+                  <p className="text-3xl font-bold mb-1">15</p>
+                  <p className="text-[10px] text-muted-foreground uppercase tracking-widest">Repositories</p>
+                </div>
+                <div className="text-center p-4 rounded-xl bg-white/5 border border-white/10">
+                  <div className="flex items-center justify-center mb-2">
+                    <svg className="w-5 h-5 text-orange-400" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z" />
+                    </svg>
+                  </div>
+                  <p className="text-3xl font-bold mb-1">0</p>
+                  <p className="text-[10px] text-muted-foreground uppercase tracking-widest">Followers</p>
+                </div>
+                <div className="text-center p-4 rounded-xl bg-white/5 border border-white/10">
+                  <div className="flex items-center justify-center mb-2">
+                    <svg className="w-5 h-5 text-purple-400" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M8 9a3 3 0 100-6 3 3 0 000 6zM8 11a6 6 0 016 6H2a6 6 0 016-6zM16 7a1 1 0 10-2 0v1h-1a1 1 0 100 2h1v1a1 1 0 102 0v-1h1a1 1 0 100-2h-1V7z" />
+                    </svg>
+                  </div>
+                  <p className="text-3xl font-bold mb-1">0</p>
+                  <p className="text-[10px] text-muted-foreground uppercase tracking-widest">Following</p>
+                </div>
+                <div className="text-center p-4 rounded-xl bg-white/5 border border-white/10">
+                  <div className="flex items-center justify-center mb-2">
+                    <svg className="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clipRule="evenodd" />
+                    </svg>
+                  </div>
+                  <p className="text-3xl font-bold mb-1">2023</p>
+                  <p className="text-[10px] text-muted-foreground uppercase tracking-widest">Since</p>
+                </div>
+              </div>
+
+              {/* Contribution Graph - Compact */}
+              <div className="mb-4 p-3 rounded-xl bg-black/20 border border-white/5">
+                <div className="flex gap-[1.5px]">
+                  {Array.from({ length: 53 }).map((_, week) => (
+                    <div key={week} className="flex flex-col gap-[1.5px]">
+                      {Array.from({ length: 7 }).map((_, day) => {
+                        const intensity = Math.random();
+                        let bgColor = 'bg-white/5';
+                        if (intensity > 0.75) bgColor = 'bg-yellow-500';
+                        else if (intensity > 0.55) bgColor = 'bg-yellow-400';
+                        else if (intensity > 0.35) bgColor = 'bg-yellow-500/50';
+                        else if (intensity > 0.15) bgColor = 'bg-yellow-500/25';
+                        return <div key={day} className={`w-[2.5px] h-[2.5px] rounded-sm ${bgColor}`}></div>;
+                      })}
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Footer */}
+              <div className="pt-4 border-t border-white/10">
+                <p className="text-sm text-center text-muted-foreground">
+                  View all repos on <span className="text-white font-bold">GitHub</span>
+                </p>
+              </div>
+            </motion.a>
           </div>
         </motion.div>
       </div>

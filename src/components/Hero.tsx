@@ -109,12 +109,7 @@ export function Hero() {
 
   const handleDownloadCV = () => {
     trackCVDownload();
-    const link = document.createElement('a');
-    link.href = '/Mayank_Pandey_CV.pdf';
-    link.download = 'Mayank_Pandey_CV.pdf';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    window.open('/Mayank_Pandey_CV.pdf', '_blank');
   };
 
   const scrollToContact = () => {
@@ -125,11 +120,11 @@ export function Hero() {
   const greetingText = "Hi, I'm";
 
   return (
-    <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20 md:pt-0">
+    <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-24 sm:pt-28 md:pt-32 pb-20">
       {/* Content */}
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-          {/* Hero Image - Left Side */}
+      <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex flex-col items-center text-center">
+          {/* Hero Image - Centered at Top */}
           <motion.div
             initial={{ opacity: 0, scale: 0.5 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -139,7 +134,7 @@ export function Hero() {
               type: "spring",
               stiffness: 100
             }}
-            className="flex justify-center lg:justify-start order-1"
+            className="mb-6 sm:mb-8"
           >
             <div className="relative">
               <motion.div 
@@ -157,7 +152,7 @@ export function Hero() {
               <motion.img 
                 src={heroImage} 
                 alt="Mayank Pandey" 
-                className="relative w-64 h-64 sm:w-80 sm:h-80 lg:w-[420px] lg:h-[420px] rounded-full object-cover border-4 border-primary/40 shadow-2xl"
+                className="relative w-56 h-56 sm:w-64 sm:h-64 md:w-72 md:h-72 lg:w-80 lg:h-80 rounded-full object-cover border-4 border-primary/40 shadow-2xl"
                 whileHover={{ 
                   scale: 1.05,
                   rotate: 2,
@@ -194,145 +189,106 @@ export function Hero() {
             </div>
           </motion.div>
 
-          {/* Text Content - Right Side */}
-          <div className="order-2 text-center lg:text-left">
-            {/* Animated Greeting - Character reveal */}
-            <motion.h1
-              className="font-bold mb-4"
-              style={{ fontFamily: "'Syne', sans-serif" }}
+          {/* Name - Large and Centered */}
+          <motion.h1
+            className="font-bold mb-4"
+            style={{ fontFamily: "'Syne', sans-serif" }}
+            variants={nameVariants}
+            initial="hidden"
+            animate="visible"
+          >
+            <span
+              className="block text-white"
+              style={{ fontSize: "clamp(2.5rem, 8vw, 5rem)", lineHeight: 1.1, letterSpacing: "0.02em" }}
             >
-              {/* Greeting - slightly smaller */}
-              <motion.span
-                className="block mb-1"
-                style={{ fontSize: "clamp(1.75rem, 4vw, 3rem)", lineHeight: 1.1 }}
-                variants={greetingVariants}
-                initial="hidden"
-                animate="visible"
-              >
-                {greetingText.split("").map((char, i) => (
-                  <motion.span
-                    key={i}
-                    variants={greetingCharVariants}
-                    className="inline-block"
-                    style={{ whiteSpace: char === " " ? "pre" : undefined }}
-                  >
-                    {char === " " ? "\u00A0" : char}
-                  </motion.span>
-                ))}
-              </motion.span>
-
-              {/* Name - fills the column on one line */}
-              <motion.span
-                className="block text-primary whitespace-nowrap"
-                style={{ fontSize: "clamp(2.5rem, 6vw, 5rem)", lineHeight: 1.05 }}
-                variants={nameVariants}
-                initial="hidden"
-                animate="visible"
-              >
-                {nameText.split("").map((char, i) => (
-                  <motion.span
-                    key={i}
-                    variants={charVariants}
-                    className="inline-block"
-                    style={{
-                      whiteSpace: char === " " ? "pre" : undefined,
-                      textShadow: "0 0 40px rgba(0, 163, 255, 0.4)",
-                    }}
-                  >
-                    {char === " " ? "\u00A0" : char}
-                  </motion.span>
-                ))}
-              </motion.span>
-            </motion.h1>
-
-            {/* Typing Effect Role */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 1.0 }}
-              className="mb-6"
-            >
-              <span className="inline-flex items-center px-4 py-2 rounded-full glass-card text-xs sm:text-sm border border-primary/30 text-primary min-h-[36px]">
-                <span className="mr-1">{">"}</span>
-                <span className="font-mono">{typedRole}</span>
+              {nameText.split("").map((char, i) => (
                 <motion.span
-                  animate={{ opacity: [1, 0] }}
-                  transition={{ duration: 0.5, repeat: Infinity, repeatType: "reverse" }}
-                  className="ml-0.5 inline-block w-[2px] h-4 bg-primary"
-                />
-              </span>
-            </motion.div>
+                  key={i}
+                  variants={charVariants}
+                  className="inline-block"
+                  style={{
+                    whiteSpace: char === " " ? "pre" : undefined,
+                  }}
+                >
+                  {char === " " ? "\u00A0" : char}
+                </motion.span>
+              ))}
+            </span>
+          </motion.h1>
 
-            <motion.p
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 1.2 }}
-              className="text-base sm:text-lg text-muted-foreground mb-8 max-w-xl mx-auto lg:mx-0"
-            >
-              Full-Stack Developer crafting innovative web solutions with cutting-edge technologies.
-              Passionate about AI, cloud computing, and building scalable applications.
-            </motion.p>
+          {/* Role/Title */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 1.0 }}
+            className="mb-6"
+          >
+            <span className="text-xl sm:text-2xl text-muted-foreground font-medium">
+              Full Stack Developer
+            </span>
+          </motion.div>
 
-            {/* CTA Buttons — shared spotlight container */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 1.4 }}
-              className="flex items-center justify-center lg:justify-start mb-8"
-            >
-              <SpotlightGroup
-                buttons={[
-                  {
-                    children: (<><Mail className="w-5 h-5" />Hire Me</>),
-                    onClick: scrollToContact,
-                    variant: "filled",
-                  },
-                  {
-                    children: (<><Download className="w-5 h-5" />Download CV</>),
-                    onClick: handleDownloadCV,
-                    variant: "outline",
-                  },
-                ]}
-              />
-            </motion.div>
+          {/* Description */}
+          <motion.p
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 1.2 }}
+            className="text-base sm:text-lg text-muted-foreground mb-8 max-w-3xl"
+          >
+            Building scalable, user-centric web applications with modern technologies, GenAI integration, and clean architecture.
+          </motion.p>
 
-            {/* Social Links */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 1.6 }}
-              className="flex items-center justify-center lg:justify-start gap-4"
-            >
-              <motion.a
-                href="https://github.com/MayankGitHub86"
-                target="_blank"
-                rel="noopener noreferrer"
-                whileHover={{ scale: 1.2, rotate: 5 }}
-                whileTap={{ scale: 0.9 }}
-                className="p-3 rounded-lg glass-card border border-primary/30 hover:border-primary/60 transition-all duration-300 hover:bg-primary/10"
+          {/* Tech Badges */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 1.4 }}
+            className="flex flex-wrap items-center justify-center gap-3 mb-10"
+          >
+            {[
+              { name: "React Frameworks", icon: "⚛️" },
+              { name: "Node.js backend", icon: "🟢" },
+              { name: "TypeScript", icon: "📘" },
+              { name: "GenAI Integration", icon: "🤖" },
+              { name: "Java", icon: "☕" },
+              { name: "MongoDB", icon: "🍃" },
+            ].map((tech, i) => (
+              <motion.span
+                key={tech.name}
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.4, delay: 1.5 + i * 0.1 }}
+                whileHover={{ scale: 1.1, y: -3 }}
+                className="px-4 py-2 rounded-full glass-card border border-primary/20 hover:border-primary/40 transition-all duration-300 text-sm font-medium flex items-center gap-2"
               >
-                <Github className="w-6 h-6 text-primary" />
-              </motion.a>
-              <motion.a
-                href="https://linkedin.com/in/mayankpandey-12316543"
-                target="_blank"
-                rel="noopener noreferrer"
-                whileHover={{ scale: 1.2, rotate: -5 }}
-                whileTap={{ scale: 0.9 }}
-                className="p-3 rounded-lg glass-card border border-primary/30 hover:border-primary/60 transition-all duration-300 hover:bg-primary/10"
-              >
-                <Linkedin className="w-6 h-6 text-primary" />
-              </motion.a>
-              <motion.a
-                href="mailto:pandeymp86012@gmail.com"
-                whileHover={{ scale: 1.2, rotate: 5 }}
-                whileTap={{ scale: 0.9 }}
-                className="p-3 rounded-lg glass-card border border-primary/30 hover:border-primary/60 transition-all duration-300 hover:bg-primary/10"
-              >
-                <Mail className="w-6 h-6 text-primary" />
-              </motion.a>
-            </motion.div>
-          </div>
+                <span>{tech.icon}</span>
+                <span>{tech.name}</span>
+              </motion.span>
+            ))}
+          </motion.div>
+
+          {/* CTA Buttons */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 1.8 }}
+            className="flex items-center justify-center"
+          >
+            <SpotlightGroup
+              buttons={[
+                {
+                  children: (<><Mail className="w-5 h-5" />Hire Me</>),
+                  onClick: scrollToContact,
+                  variant: "filled",
+                },
+                {
+                  children: (<><Download className="w-5 h-5" />View Resume</>),
+                  onClick: handleDownloadCV,
+                  variant: "outline",
+                },
+              ]}
+            />
+          </motion.div>
         </div>
       </div>
     </section>

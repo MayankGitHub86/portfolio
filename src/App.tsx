@@ -5,6 +5,7 @@ import { Hero } from "./components/Hero";
 import { About } from "./components/About";
 import { Skills } from "./components/Skills";
 import { Projects } from "./components/Projects";
+import { Certifications } from "./components/Certifications";
 import { Experience } from "./components/Experience";
 import { CurrentlyWorkingOn } from "./components/CurrentlyWorkingOn";
 import { Contact } from "./components/Contact";
@@ -23,7 +24,7 @@ const sectionColors: Record<string, { orb1: string; orb2: string; orb3: string; 
   about:      { orb1: "0, 200, 180",  orb2: "0, 163, 255",   orb3: "100, 200, 255", particles: "0, 200, 180" },
   skills:     { orb1: "160, 32, 240", orb2: "0, 163, 255",   orb3: "160, 32, 240",  particles: "160, 32, 240" },
   projects:   { orb1: "0, 163, 255",  orb2: "0, 255, 198",   orb3: "0, 100, 255",   particles: "0, 255, 198" },
-  "current-work": { orb1: "255, 140, 0", orb2: "255, 69, 0", orb3: "255, 200, 0",   particles: "255, 165, 0" },
+  certifications: { orb1: "255, 215, 0", orb2: "255, 140, 0", orb3: "255, 165, 0",  particles: "255, 200, 0" },
   experience: { orb1: "160, 32, 240", orb2: "255, 0, 110",   orb3: "200, 50, 255",  particles: "160, 32, 240" },
   contact:    { orb1: "0, 255, 150",  orb2: "0, 163, 255",   orb3: "50, 200, 100",  particles: "0, 200, 100" },
 };
@@ -49,7 +50,7 @@ export default function App() {
 
   // Section detection for dynamic backgrounds
   useEffect(() => {
-    const sections = ["home", "about", "skills", "projects", "current-work", "experience", "contact"];
+    const sections = ["home", "about", "skills", "projects", "certifications", "experience", "contact"];
     
     const observer = new IntersectionObserver(
       (entries) => {
@@ -198,7 +199,7 @@ export default function App() {
 
         {/* Section indicator dots (subtle) */}
         <div className="hidden lg:flex fixed right-6 top-1/2 -translate-y-1/2 z-30 flex-col gap-3">
-          {["home", "about", "skills", "projects", "current-work", "experience", "contact"].map((section) => (
+          {["home", "about", "skills", "projects", "certifications", "experience", "contact"].map((section) => (
             <motion.button
               key={section}
               onClick={() => document.getElementById(section)?.scrollIntoView({ behavior: "smooth" })}
@@ -229,7 +230,7 @@ export default function App() {
           <About />
           <Skills />
           <Projects />
-          <CurrentlyWorkingOn />
+          <Certifications />
           <Experience />
           <Contact />
         </main>
